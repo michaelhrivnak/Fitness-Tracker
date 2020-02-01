@@ -32,6 +32,7 @@ app.get("/api/workouts", (req,res)=>{
       res.status(500).send(err);
     }else{
       res.json(data);
+      console.log("workout data: ", data);
     }
   });
 });
@@ -47,17 +48,17 @@ app.post("/api/workouts", (req,res)=>{
   });
 });
 
-app.get("/exercise?id=:id", (req,res)=>{
-  let id = req.params.id;
-  console.log("adding to existing workout", id);
-  db.Workout.find({_id: mongo.ObjectID(id)},(err,data)=>{
-    if(err){
-      res.status(500).send(err.message);
-    }else{
-      res.json(data);
-    }
-  });
-});
+// app.get("/exercise?id=:id", (req,res)=>{
+//   let id = req.params.id;
+//   console.log("adding to existing workout", id);
+//   db.Workout.find({_id: mongo.ObjectID(id)},(err,data)=>{
+//     if(err){
+//       res.status(500).send(err.message);
+//     }else{
+//       res.json(data);
+//     }
+//   });
+// });
 
 app.get("/exercise", (req,res)=>{
   console.log("going to new exercise");
