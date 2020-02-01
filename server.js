@@ -22,10 +22,13 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { use
 
 // Routes
 
+//HTML route to go to index
 app.get("/",(req,res)=>{
     res.sendFile("index.html");
 });
 
+
+//get all workouts
 app.get("/api/workouts", (req,res)=>{
   db.Workout.find({},(err,data)=>{
     if(err){
@@ -37,7 +40,7 @@ app.get("/api/workouts", (req,res)=>{
   });
 });
 
-
+//POST to create a new workout
 app.post("/api/workouts", (req,res)=>{
   db.Workout.create({},(err,data)=>{
     if(err){
@@ -48,25 +51,12 @@ app.post("/api/workouts", (req,res)=>{
   });
 });
 
-// app.get("/exercise?id=:id", (req,res)=>{
-//   let id = req.params.id;
-//   console.log("adding to existing workout", id);
-//   db.Workout.find({_id: mongo.ObjectID(id)},(err,data)=>{
-//     if(err){
-//       res.status(500).send(err.message);
-//     }else{
-//       res.json(data);
-//     }
-//   });
-// });
-
+//HTML Route to go to exercise page
 app.get("/exercise", (req,res)=>{
-  console.log("going to new exercise");
   res.sendFile(path.join(__dirname+"/public/exercise.html"));
 });
 
-
-
+//Put request to update a specific workout with the new exercise
 app.put("/api/workouts/:id", (req,res)=>{
   let id = req.params.id;
   let exercise = req.body;
@@ -79,15 +69,18 @@ app.put("/api/workouts/:id", (req,res)=>{
   });
 });
 
+//find all workouts
 app.get("/api/workouts/range", (req,res)=>{
   db.Workout.find({}, (err,data)=>{
     res.json(data);
   });
 });
 
+//HTML Route to go to stats page
 app.get("/stats", (req,res)=>{
   res.sendFile(path.join(__dirname+"/public/stats.html"));
 });
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
